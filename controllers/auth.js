@@ -51,7 +51,7 @@ const getLoggedInUser = async (req, res) => {
         },
         (err, token) => {
           if (err) throw err;
-          res.json({token});
+          res.json({ "success": true, token });
         },
       );
     } catch (err) {
