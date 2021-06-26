@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const {check, validationResult} = require('express-validator');
+const {check} = require('express-validator');
 
-const User = require('../models/User');
-const Contact = require('../models/Post');
-const contrl = require('../controllers/posts')
+const postController = require('../controllers/posts')
 
 // @route     GET api/contacts
 // @desc      Get all users contacts
 // @access    Private
-router.get('/', auth, contrl.getAllPosts);
+router.get('/', auth, postController.getAllPosts);
 
 // @route     POST api/contacts
 // @desc      Add new contact
@@ -25,22 +23,22 @@ router.post(
         .isEmpty(),
     ],
   ],
-  contrl.createPost
+  postController.createPost
 );
 
 // @route     PUT api/contacts/:id
 // @desc      Update contact
 // @access    Private
-router.put('/:id', auth, contrl.updatePost);
+router.put('/:id', auth, postController.updatePost);
 
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
 // @access    Private
-router.delete('/:id', auth, contrl.deletePost);
+router.delete('/:id', auth, postController.deletePost);
 
 // @route     get api/contacts/:id
 // @desc      Get single contact
 // @access    Private
-router.get('/:id', auth, contrl.getSinglePost);
+router.get('/:id', auth, postController.getSinglePost);
 
 module.exports = router;

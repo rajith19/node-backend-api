@@ -1,13 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const { check } = require('express-validator');
 
-const User = require('../models/User');
 
-const signUpUser = require('../controllers/signupUsers')
+const signUpUserController = require('../controllers/signUpUsers')
 
 // @route     POST api/users
 // @desc      Regiter a user
@@ -24,7 +20,7 @@ router.post(
       'Please enter a password with 6 or more characters',
     ).isLength({ min: 6 }),
   ],
-  signUpUser.registerUser
+  signUpUserController.registerUser
 );
 
 module.exports = router;
