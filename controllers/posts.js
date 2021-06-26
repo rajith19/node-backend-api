@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 
 const Post = require('../models/Post');
 
-// Get All posts
+// Get all posts
 const getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find({ user: req.user.id }).sort({
