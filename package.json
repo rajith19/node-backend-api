@@ -1,5 +1,5 @@
 {
-  "name": "Feed the Need",
+  "name": "feed-the-need",
   "version": "1.0.0",
   "description": "Contact manager app",
   "main": "server.js",
