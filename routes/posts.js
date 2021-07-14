@@ -5,12 +5,19 @@ const {check} = require('express-validator');
 
 const postController = require('../controllers/posts');
 
-// @route     GET api/contacts
-// @desc      Get all users contacts
-// @access    Private
-router.get('/', auth, postController.getAllPosts);
 
-// @route     POST api/contacts
+// @route     GET api/posts
+// @desc      Get all posts of a user
+// @access    Private
+router.get('/all', auth, postController.getAllPosts);
+
+
+// @route     GET api/posts
+// @desc      Get all posts of a user
+// @access    Private
+router.get('/', auth, postController.getAllPostsPerUser);
+
+// @route     POST api/posts
 // @desc      Add new contact
 // @access    Private
 router.post(
@@ -26,17 +33,17 @@ router.post(
   postController.createPost
 );
 
-// @route     PUT api/contacts/:id
+// @route     PUT api/posts/:id
 // @desc      Update contact
 // @access    Private
 router.put('/:id', auth, postController.updatePost);
 
-// @route     DELETE api/contacts/:id
+// @route     DELETE api/posts/:id
 // @desc      Delete contact
 // @access    Private
 router.delete('/:id', auth, postController.deletePost);
 
-// @route     get api/contacts/:id
+// @route     get api/posts/:id
 // @desc      Get single contact
 // @access    Private
 router.get('/:id', auth, postController.getSinglePost);

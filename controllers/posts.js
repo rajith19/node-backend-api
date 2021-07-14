@@ -5,6 +5,19 @@ const Post = require('../models/Post');
 // Get all posts
 const getAllPosts = async (req, res) => {
   try {
+    const posts = await Post.find({}).sort({
+      date: -1,
+    });
+    res.json({status_code : 200,success: true,posts});
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+}
+
+// Get all posts per user
+const getAllPostsPerUser = async (req, res) => {
+  try {
     const posts = await Post.find({ user_id: req.user.id }).sort({
       date: -1,
     });
@@ -118,6 +131,7 @@ const getSinglePost = async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getAllPostsPerUser,
   createPost,
   deletePost,
   updatePost,
