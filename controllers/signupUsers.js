@@ -7,7 +7,7 @@ const User = require('../models/User');
 const registerUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({status_code : 400, success:false,errors: errors.array() });
   }
 
   const { name, email, password, admin } = req.body;
@@ -16,7 +16,7 @@ const registerUser = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
+      return res.status(400).json({status_code : 400,success:false, msg: 'User already exists' });
     }
 
     user = new User({

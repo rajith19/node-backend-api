@@ -8,7 +8,7 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.find({ user_id: req.user.id }).sort({
       date: -1,
     });
-    res.json(posts);
+    res.json({status_code : 200,success: true,posts});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -35,7 +35,7 @@ const createPost = async (req, res) => {
 
     const post = await newPost.save();
 
-    res.json({status_code : 200,success: false, post});
+    res.json({status_code : 201,success: true, post});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -47,16 +47,16 @@ const deletePost = async (req, res) => {
   try {
     let post = await Post.findById(req.params.id);
 
-    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    if (!post) return res.status(404).json({status_code : 404,success:false, msg: 'Post not found' });
 
     // Make sure user owns post
     if (post.user_id.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
+      return res.status(401).json({status_code : 401,success:false, msg: 'Not authorized' });
     }
 
     await Post.findByIdAndRemove(req.params.id);
 
-    res.json({ msg: 'Post removed' });
+    res.json({succes:true, msg: 'Post removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -76,11 +76,11 @@ const updatePost = async (req, res) => {
   try {
     let post = await Post.findById(req.params.id);
 
-    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    if (!post) return res.status(404).json({status_code : 404,success:false, msg: 'Post not found' });
 
     // Make sure user owns post
     if (post.user_id.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
+      return res.status(401).json({status_code : 401,success:false, msg: 'Not authorized' });
     }
 
     post = await Post.findByIdAndUpdate(
@@ -89,7 +89,7 @@ const updatePost = async (req, res) => {
       { new: true },
     );
 
-    res.json(post);
+    res.json({success:true,post});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -101,15 +101,15 @@ const getSinglePost = async (req, res) => {
   try {
     let post = await Post.findById(req.params.id);
 
-    if (!post) return res.status(404).json({ msg: 'Post not found' });
+    if (!post) return res.status(404).json({status_code : 404,success:false, msg: 'Post not found' });
     // Make sure user owns post
     if (post.user_id.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
+      return res.status(401).json({status_code : 401,success:false, msg: 'Not authorized' });
     }
 
     post = await Post.findById(req.params.id);
 
-    res.json(post);
+    res.json({success:true, post});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
