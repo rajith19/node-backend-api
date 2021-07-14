@@ -35,7 +35,7 @@ const createPost = async (req, res) => {
 
     const post = await newPost.save();
 
-    res.json(post);
+    res.json({status_code : 200,success: false, post});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
