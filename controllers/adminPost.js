@@ -23,10 +23,10 @@ const deletePost = async (req, res) => {
 
     if (!post) return res.status(404).json({status_code : 404,success:false, msg: 'Post not found' });
 
-    // Make sure user owns post
-    if (post.user_id.toString() !== req.user.id) {
-      return res.status(401).json({status_code : 401,success:false, msg: 'Not authorized' });
-    }
+    // // Make sure user owns post
+    // if (post.user_id.toString() !== req.user.id) {
+    //   return res.status(401).json({status_code : 401,success:false, msg: 'Not authorized' });
+    // }
 
     await Post.findByIdAndRemove(req.params.id);
 
