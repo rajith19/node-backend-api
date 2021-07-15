@@ -31,6 +31,9 @@ const PostSchema = mongoose.Schema({
   },
   email:{
     type:String
+  },
+  ordered : {
+    type:Boolean
   }
 });
 
