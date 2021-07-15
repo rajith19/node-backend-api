@@ -5,7 +5,7 @@ const Post = require('../models/Post');
 // Get all posts
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({"isApproved" : true}).sort({
+    const posts = await Post.find({"isApproved" : true, user_id: {$ne : req.user.id}}).sort({
       date: -1,
     });
     res.json({status_code : 200,success: true,posts});
@@ -127,7 +127,7 @@ const getSinglePost = async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-};;
+};
 
 module.exports = {
   getAllPosts,
