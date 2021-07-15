@@ -35,7 +35,7 @@ const createPost = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, description, image, location } = req.body;
+  const { name, description, image, location, postBy, email } = req.body;
 
   try {
     const newPost = new Post({
@@ -44,6 +44,8 @@ const createPost = async (req, res) => {
       image,
       location,
       user_id: req.user.id,
+      postBy,
+      email
     });
 
     const post = await newPost.save();

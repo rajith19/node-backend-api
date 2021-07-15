@@ -25,6 +25,12 @@ const PostSchema = mongoose.Schema({
   isApproved : {
     type: Boolean,
     default : false
+  },
+  postBy:{
+    type:String,
+  },
+  email:{
+    type:String
   }
 });
 
