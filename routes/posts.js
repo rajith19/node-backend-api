@@ -18,7 +18,7 @@ router.get('/all', auth, postController.getAllPosts);
 router.get('/', auth, postController.getAllPostsPerUser);
 
 // @route     POST api/posts
-// @desc      Add new contact
+// @desc      Add new post
 // @access    Private
 router.post(
   '/',
@@ -34,12 +34,12 @@ router.post(
 );
 
 // @route     PUT api/posts/:id
-// @desc      Update contact
+// @desc      Update post
 // @access    Private
 router.put('/:id', auth, postController.updatePost);
 
 // @route     DELETE api/posts/:id
-// @desc      Delete contact
+// @desc      Delete post
 // @access    Private
 router.delete('/:id', auth, postController.deletePost);
 
