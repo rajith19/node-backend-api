@@ -69,7 +69,7 @@ const deletePost = async (req, res) => {
 
     await Post.findByIdAndRemove(req.params.id);
 
-    res.json({succes:true, msg: 'Post removed' });
+    res.json({success:true, msg: 'Post removed' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
