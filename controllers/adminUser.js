@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 // Get all users
 const getAllUsers = async (req, res) => {
@@ -53,14 +54,30 @@ const updateUser = async (req, res) => {
       },
       { new: true },
     );
-
-
+    updateAllPost(req.params.id, isBlocked);
     res.json({ status_code: 204, success: true, user });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 };
+
+const updateAllPost = async (id, isBlocked) => {
+
+  try {
+    let posts = await Post.find({user_id: id});
+
+    if (!posts) return;
+
+     await Post.update({user_id: id},{userBlocked : isBlocked} , {multi: true});
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+
+}
+
+
 
 // Get single user
 const getSingleUser = async (req, res) => {

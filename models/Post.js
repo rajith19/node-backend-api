@@ -34,6 +34,10 @@ const PostSchema = mongoose.Schema({
   },
   ordered : {
     type:Boolean
+  },
+  userBlocked : {
+    type: Boolean,
+    default : false
   }
 });
 
