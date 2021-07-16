@@ -56,6 +56,8 @@ const authUserGetToken = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+
+
     let user = await User.findOne({ email });
 
     if (!user) {
@@ -68,10 +70,12 @@ const authUserGetToken = async (req, res) => {
       return res.status(400).json({ status_code: 400, success: false, msg: 'Invalid Credentials' });
     }
 
+
     const payload = {
       user: {
         id: user.id,
-        admin: user.admin
+        admin: user.admin,
+        isBlocked: user.isBlocked
       },
     };
 
@@ -83,6 +87,10 @@ const authUserGetToken = async (req, res) => {
       },
       (err, token) => {
         if (err) throw err;
+        const decoded = jwt.verify(token, process.env.jwtSecret);
+        if(decoded.user.isBlocked) {
+          return res.status(403).json({ status_code: 403, success: false, msg: 'You have been blocked, please contact administator.' });
+        }
         res.json({ success: true, token });
       },
     );

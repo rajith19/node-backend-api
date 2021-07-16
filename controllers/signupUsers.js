@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
     return res.status(400).json({status_code : 400, success:false,errors: errors.array() });
   }
 
-  const { name, email, password, admin } = req.body;
+  const { name, email, password, admin, isBlocked } = req.body;
 
   try {
     let user = await User.findOne({ email });
@@ -23,7 +23,8 @@ const registerUser = async (req, res) => {
       name,
       email,
       password,
-      admin
+      admin,
+      isBlocked
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -35,7 +36,8 @@ const registerUser = async (req, res) => {
     const payload = {
       user: {
         id: user.id,
-        admin: user.admin
+        admin: user.admin,
+        isBlocked : user.isBlocked
       },
     };
 
