@@ -5,7 +5,7 @@ const Post = require('../models/Post');
 // Get all posts
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({"userBlocked" : false, "isApproved" : true, user_id: {$ne : req.user.id},  }).sort({
+    const posts = await Post.find({"userBlocked" : false, "ordered" : false,"isApproved" : true, user_id: {$ne : req.user.id},  }).sort({
       date: -1,
     });
     res.json({status_code : 200,success: true,posts});
