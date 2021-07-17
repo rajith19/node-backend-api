@@ -54,7 +54,8 @@ const updateUser = async (req, res) => {
       },
       { new: true },
     );
-    updateAllPost(req.params.id, isBlocked);
+
+    if(user)  updateAllPost(req.params.id, isBlocked);
     res.json({ status_code: 204, success: true, user });
   } catch (err) {
     console.error(err.message);

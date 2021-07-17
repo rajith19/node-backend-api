@@ -22,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.9.5",
-    "nodemailer": "^6.6.3"
+    "nodemailer": "^6.6.3",
+    "prettier": "^2.3.2"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
