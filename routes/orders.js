@@ -23,7 +23,7 @@ router.get(
 
 
 // @route     GET api/orders/:id
-// @desc      Get all orders
+// @desc      Get single order
 // @access    Private
 router.get(
   '/:id',auth,orderController.getSingleOrder

@@ -35,7 +35,7 @@ const deleteOrder = async (req, res) => {
 
 // Update order
 const updateOrder = async (req, res) => {
-  const { isApproved } = req.body;
+  const { orderStatus } = req.body;
   try {
     let order = await Order.findById(req.params.id);
 
@@ -43,7 +43,7 @@ const updateOrder = async (req, res) => {
 
       order = await Order.findByIdAndUpdate(
       req.params.id,
-      { "isApproved": isApproved },
+      { orderStatus },
       { new: true },
     );
     res.json({status_code: 204 , success:true, order});

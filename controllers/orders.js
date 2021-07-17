@@ -102,7 +102,7 @@ const updatePost = async (id) => {
 // Get all orders
 const getAllOrder = async (req, res) => {
   try {
-    const orders = await Order.find({}).sort({
+    const orders = await Order.find({ buyerUser_id: req.user.id}).sort({
       date: -1,
     });
     res.json({ status_code: 200, success: true, orders });
