@@ -15,10 +15,10 @@ const OrderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'posts'
   },
-  postedBy: {
+  postedByName: {
     type: String
   },
-  posterEmail: {
+  postedByEmail: {
     type: String
   },
   buyerUser_id: {
