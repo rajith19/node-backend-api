@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-var moment = require('moment-timezone');
-moment().tz("America/Los_Angeles").format();
+
 const OrderSchema = mongoose.Schema({
 
   productName: {

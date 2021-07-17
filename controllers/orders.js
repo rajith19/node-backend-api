@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator');
 
 const Order = require('../models/Order');
 const moment = require('moment-timezone');
-const canadEastern = moment.tz(Date.now(), "Asia/Kolkata");
 
 const timeInSec = moment().endOf('day').valueOf()
 const Interval = timeInSec -Date.now();
