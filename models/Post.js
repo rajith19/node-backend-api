@@ -33,7 +33,8 @@ const PostSchema = mongoose.Schema({
     type:String
   },
   ordered : {
-    type:Boolean
+    type:Boolean,
+    default : false
   },
   userBlocked : {
     type: Boolean,
