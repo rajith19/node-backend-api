@@ -1,38 +1,39 @@
 const mongoose = require('mongoose');
-
+var moment = require('moment-timezone');
+moment().tz("America/Los_Angeles").format();
 const OrderSchema = mongoose.Schema({
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'users'
-  },
-  name: {
+
+  productName: {
     type: String,
-    required: true,
-    ref: 'posts'
   },
   description: {
-    type: String,
-    ref: 'posts'
-  },
-  image: {
-    type: String,
-    ref: 'posts'
-  },
-  location: {
-    type: String,
-    ref: 'posts'
+    type: String
   },
   date: {
     type: Date,
-    default: Date.now
   },
-  postBy:{
-    type:String,
+  post_id: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'posts'
   },
-  email:{
-    type:String,
-    ref: 'posts'
+  postedBy: {
+    type: String
+  },
+  posterEmail: {
+    type: String
+  },
+  buyerUser_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users'
+  },
+  buyerName: {
+    type: String
+  },
+  buyerEmail: {
+    type: String
+  },
+  orderStatus: {
+    type: String
   }
 });
 

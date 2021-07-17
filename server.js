@@ -15,6 +15,7 @@ app.use(express.json({ extended: false }));
 app.use('/api/users', require('./routes/signupUsers'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/posts', require('./routes/posts'));
+app.use('/api/orders', require('./routes/orders'));
 app.use('/api/admin/posts', require('./routes/adminPosts'));
 app.use('/api/admin/users', require('./routes/adminUsers'));
 
