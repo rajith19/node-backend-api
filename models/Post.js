@@ -26,10 +26,10 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
     default : false
   },
-  postBy:{
+  postedByName:{
     type:String,
   },
-  email:{
+  postedByEmail:{
     type:String
   },
   ordered : {
