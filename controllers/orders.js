@@ -60,11 +60,11 @@ const createOrder = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { productName, description, date, post_id, postedBy, posterEmail, buyerUser_id, buyerName, buyerEmail, orderStatus } = req.body;
+  const { productName, description, date, post_id, postedByName, postedByEmail, buyerName, buyerEmail, orderStatus } = req.body;
   try {
     const newPost = new Order({
       buyerUser_id: req.user.id,
-      productName, description, date, post_id, postedBy, posterEmail, buyerName, buyerEmail, orderStatus
+      productName, description, date, post_id, postedByName, postedByEmail, buyerName, buyerEmail, orderStatus
     });
 
     const order = await newPost.save();
