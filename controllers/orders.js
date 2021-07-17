@@ -8,12 +8,11 @@ const Interval = timeInSec -Date.now();
 
 
 setInterval(async ()=>{
-  const createOrder = async (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    console.log("canad", canadEastern)
   
     const { check } = req.body;
     try {
@@ -38,7 +37,6 @@ const createOrder = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  console.log("canad", canadEastern)
 
   const { check } = req.body;
   try {
