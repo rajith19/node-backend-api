@@ -21,7 +21,8 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.33",
-    "mongoose": "^5.9.5"
+    "mongoose": "^5.9.5",
+    "nodemailer": "^6.6.3"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
