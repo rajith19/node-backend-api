@@ -24,4 +24,21 @@ router.post(
   authController.authUserGetToken
 );
 
+
+// @route     POST api/auth/forgot
+// @desc      resetpassword get token
+// @access    Public
+router.post(
+  '/forgot',
+  [
+    check('email', 'Please include a valid email').isEmail(),
+  ],
+  authController.forgotPassword
+);
+
+// @route     POST api/auth/password/reset/:token
+// @desc      auth reset token
+// @access    Public
+router.route('/password/reset/:token').put(authController.resetPassword)
+
 module.exports = router;
