@@ -170,7 +170,7 @@ const resetPassword = async (req, res) =>{
     })
 
     if (!user) {
-      return res.status(404).json({ status_code: 404, success: false, msg: 'This link has expired. Please try again by clicking Forget password.' });
+      return res.status(404).json({ status_code: 404, success: false, msg: 'This link has expired. Please try again by clicking Forgot password.' });
     }
 
     if (req.body.password !== req.body.confirmPassword) {
