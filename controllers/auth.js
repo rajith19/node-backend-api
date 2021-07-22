@@ -118,7 +118,7 @@ const forgotPassword = async (req, res) => {
   // Create reset password url
   const resetUrl = `${req.protocol}://${"localhost:3000"}/#/password/reset/${resetToken}`;
 
-  const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
+  const message = `Your password reset url is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
 
   try {
       var transporter = nodemailer.createTransport({
@@ -170,7 +170,7 @@ const resetPassword = async (req, res) =>{
     })
 
     if (!user) {
-      return res.status(404).json({ status_code: 404, success: false, msg: 'User not found with this email' });
+      return res.status(404).json({ status_code: 404, success: false, msg: 'This link has expired. Please try again by clicking Forget password.' });
     }
 
     if (req.body.password !== req.body.confirmPassword) {
