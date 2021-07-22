@@ -124,8 +124,8 @@ const forgotPassword = async (req, res) => {
       var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'rvg0627@gmail.com',
-          pass: 'dragoon007'
+          user: process.env.email,
+          pass: process.env.password
         }
       });
 
@@ -146,6 +146,7 @@ const forgotPassword = async (req, res) => {
 
 
     res.status(200).json({
+      status_code: 200, 
       success: true,
       message: `Email sent to: ${user.email}`
     })
@@ -186,9 +187,9 @@ const resetPassword = async (req, res) =>{
 
     await user.save();
 
-    res.status(200).json({
+    res.status(200).json({ status_code: 200, 
       success: true,
-      message: `Successfully changed`
+      message: `Password successfully changed.`
     })
   }
   catch(err){
