@@ -116,7 +116,7 @@ const forgotPassword = async (req, res) => {
   await user.save({ validateBeforeSave: false });
 
   // Create reset password url
-  const resetUrl = `${req.protocol}://${"localhost:3000"}/password/reset/${resetToken}`;
+  const resetUrl = `${req.protocol}://${"localhost:3000"}/#/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
 
@@ -131,7 +131,7 @@ const forgotPassword = async (req, res) => {
 
       var mailOptions = {
         from: 'Feed the Need <rvg0627@gmail.com>',
-        to: 'rajithvgopalm@gmail.com',
+        to: req.body.email,
         subject: 'Do not reply - Password Reset',
         text: message
       };
@@ -163,13 +163,11 @@ const resetPassword = async (req, res) =>{
   try{
     // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
-    console.log("resetPasswordToken", resetPasswordToken, req.params);
 
     const user = await User.findOne({
         resetPasswordToken,
         resetPasswordExpire: { $gt: Date.now() }
     })
-    console.log("resetPasswordToken", resetPasswordToken, "user", user)
 
     if (!user) {
       return res.status(404).json({ status_code: 404, success: false, msg: 'User not found with this email' });
