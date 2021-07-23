@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-
+var nodemailer = require('nodemailer');
 const Post = require('../models/Post');
 
 // Get all posts
