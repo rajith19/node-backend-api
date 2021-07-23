@@ -50,6 +50,30 @@ const createPost = async (req, res) => {
 
     const post = await newPost.save();
 
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.email,
+        pass: process.env.password
+      }
+    });
+  
+    var mailOptions = {
+      from: "Feed the Need <rvg0627@gmail.com>",
+      to: ["feedtheneed@mailinator.com","meghakb06@gmail.com"],
+      subject: 'New post!',
+      text: `Approval pending for ${name} posted by ${postedByName}.`
+    };
+  
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+  
+
     res.json({status_code : 201,success: true, post});
   } catch (err) {
     console.error(err.message);
