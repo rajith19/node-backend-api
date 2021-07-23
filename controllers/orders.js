@@ -86,7 +86,7 @@ const createOrder = async (req, res) => {
     from: "Feed the Need <rvg0627@gmail.com>",
     to: postedByEmail,
     subject: 'Order Request!',
-    text: `Your post is booked by ${buyerName}-${buyerEmail}.`
+    text: `You have a new order request by ${buyerName}(${buyerEmail}) - for ${productName}.`
   };
 
   transporter.sendMail(mailOptions, function(error, info){
