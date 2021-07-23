@@ -73,6 +73,31 @@ const createOrder = async (req, res) => {
       updatePost(post_id);
     }
 
+
+      var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.email,
+      pass: process.env.password
+    }
+  });
+
+  var mailOptions = {
+    from: "Feed the Need <rvg0627@gmail.com>",
+    to: postedByEmail,
+    subject: 'Order Request!',
+    text: `Your post is booked by ${buyerName}-${buyerEmail}.`
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+
     res.json({ status_code: 201, success: true, order });
   } catch (err) {
     console.error(err.message);
