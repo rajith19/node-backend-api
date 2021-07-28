@@ -121,32 +121,32 @@ const forgotPassword = async (req, res) => {
   const message = `Your password reset url is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`
 
   try {
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.email,
-          pass: process.env.password
-        }
-      });
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.email,
+        pass: process.env.password
+      }
+    });
 
-      var mailOptions = {
-        from: 'Feed the Need <rvg0627@gmail.com>',
-        to: req.body.email,
-        subject: 'Do not reply - Password Reset',
-        text: message
-      };
+    var mailOptions = {
+      from: 'Feed the Need <rvg0627@gmail.com>',
+      to: req.body.email,
+      subject: 'Do not reply - Password Reset',
+      text: message
+    };
 
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
 
 
     res.status(200).json({
-      status_code: 200, 
+      status_code: 200,
       success: true,
       message: `Email sent to: ${user.email}`
     })
@@ -155,19 +155,19 @@ const forgotPassword = async (req, res) => {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     console.error("err", err.message);
-      res.status(500).send('Server Error');
-      await user.save({ validateBeforeSave: false });
+    res.status(500).send('Server Error');
+    await user.save({ validateBeforeSave: false });
   }
 }
 
-const resetPassword = async (req, res) =>{
-  try{
+const resetPassword = async (req, res) => {
+  try {
     // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
 
     const user = await User.findOne({
-        resetPasswordToken,
-        resetPasswordExpire: { $gt: Date.now() }
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() }
     })
 
     if (!user) {
@@ -175,7 +175,7 @@ const resetPassword = async (req, res) =>{
     }
 
     if (req.body.password !== req.body.confirmPassword) {
-        return res.status(400).json({ status_code: 400, success: false, msg: 'Password does not match' });
+      return res.status(400).json({ status_code: 400, success: false, msg: 'Password does not match' });
     }
 
     // Setup new password
@@ -187,13 +187,16 @@ const resetPassword = async (req, res) =>{
 
     await user.save();
 
-    res.status(200).json({ status_code: 200, 
+    res.status(200).json({
+      status_code: 200,
       success: true,
       message: `Password successfully changed.`
     })
   }
-  catch(err){
- 
+  catch (err) {
+    console.error("err", err.message);
+    res.status(500).send('Server Error');
+    await user.save({ validateBeforeSave: false });
   }
 
 }
