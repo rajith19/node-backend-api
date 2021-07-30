@@ -1,6 +1,15 @@
 const { validationResult } = require('express-validator');
 
 const Order = require('../models/Order');
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: "1221714",
+  key: "cf5a8b64cd1a3450c0cf",
+  secret: "ee093d6f6407c0d2fe7c",
+  cluster: "us2",
+  useTLS: true
+});
 
 // Get all orders
 const getAllOrders = async (req, res) => {
@@ -26,6 +35,10 @@ const deleteOrder = async (req, res) => {
 
     await Order.findByIdAndRemove(req.params.id);
 
+    pusher.trigger(req.user.id, "re-render", {
+      message: "deleted"
+    });
+    
     res.json({success:true, msg: 'Order removed' });
   } catch (err) {
     console.error(err.message);
@@ -46,6 +59,11 @@ const updateOrder = async (req, res) => {
       { orderStatus },
       { new: true },
     );
+    
+    pusher.trigger(req.user.id, "re-render", {
+      message: "updated"
+    });
+    
     res.json({status_code: 204 , success:true, order});
   } catch (err) {
     console.error(err.message);

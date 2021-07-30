@@ -1,6 +1,15 @@
 const { validationResult } = require('express-validator');
 var nodemailer = require('nodemailer');
 const Post = require('../models/Post');
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: "1221714",
+  key: "cf5a8b64cd1a3450c0cf",
+  secret: "ee093d6f6407c0d2fe7c",
+  cluster: "us2",
+  useTLS: true
+});
 
 // Get all posts
 const getAllPosts = async (req, res) => {
@@ -30,6 +39,10 @@ const deletePost = async (req, res) => {
 
     await Post.findByIdAndRemove(req.params.id);
 
+    pusher.trigger(req.user.id, "re-render", {
+      message: "deleted"
+    });
+    
     res.json({success:true, msg: 'Post removed' });
   } catch (err) {
     console.error(err.message);
@@ -76,6 +89,10 @@ const updatePost = async (req, res) => {
     });
 
 
+    pusher.trigger(req.user.id, "re-render", {
+      message: "updated"
+    });
+    
     res.json({status_code: 204 , success:true, post});
   } catch (err) {
     console.error(err.message);

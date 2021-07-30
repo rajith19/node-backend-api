@@ -2,6 +2,15 @@ const { validationResult } = require('express-validator');
 
 const User = require('../models/User');
 const Post = require('../models/Post');
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: "1221714",
+  key: "cf5a8b64cd1a3450c0cf",
+  secret: "ee093d6f6407c0d2fe7c",
+  cluster: "us2",
+  useTLS: true
+});
 
 // Get all users
 const getAllUsers = async (req, res) => {
@@ -31,6 +40,10 @@ const deleteUser = async (req, res) => {
 
     await User.findByIdAndRemove(req.params.id);
 
+    pusher.trigger(req.user.id, "re-render", {
+      message: "deleted"
+    });
+    
     res.json({ success: true, msg: 'User removed' });
   } catch (err) {
     console.error(err.message);
@@ -56,6 +69,11 @@ const updateUser = async (req, res) => {
     );
 
     if(user)  updateAllPost(req.params.id, isBlocked);
+    
+    pusher.trigger(req.user.id, "re-render", {
+      message: "updated"
+    });
+    
     res.json({ status_code: 204, success: true, user });
   } catch (err) {
     console.error(err.message);
